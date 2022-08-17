@@ -27,12 +27,37 @@ public class MyService {
 	
 	}
 	//3. 직원 추가
-	public int 직원추가(Emp emp) {
-		return empDao.직원추가(emp);
+	public void 직원추가(Emp emp) {
+		int result= empDao.직원추가(emp);
+		try {
+			if(result==1) {
+				conn.commit();
+				System.out.println("커밋");
+			}
+			else {
+				conn.rollback();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("롤백됨");
+		}
+		
 	}
 	//4. 부서 추가
-	public int 부서추가(Dept dept) {
-		return deptDao.부서추가(dept);
+	public void 부서추가(Dept dept) {
+		int result = deptDao.부서추가(dept);
+		try {
+			if(result==1) {
+				conn.commit();
+				System.out.println("커밋");
+			}
+			else {
+				conn.rollback();
+				System.out.println("롤백됨");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	//5. TF팀 창설
 	//1) 팀이 먼저 창설(Dept Entity를받는다) //50 TF team 부산
