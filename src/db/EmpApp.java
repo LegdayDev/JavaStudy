@@ -28,7 +28,7 @@ public class EmpApp {
 //		int result = empDao.직원삭제(7839);
 //		System.out.println(result);
 		
-		empDao.직원수정(1000,100, 7369);
+//		empDao.직원수정(1000,100, 7369);
 
 	}
 

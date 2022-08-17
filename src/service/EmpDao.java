@@ -1,4 +1,4 @@
-package db;
+package service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +9,20 @@ import java.util.ArrayList;
 //역할 : DB에 접근해서 Date를 Access하는 역할
 public class EmpDao {
 
+	private Connection conn;
+	public EmpDao() {
+		// TODO Auto-generated constructor stub
+	}
+	public EmpDao(Connection conn) {
+		this.conn = conn;
+	}
+
 	public int 직원수정(int sal, int comm, int empno) {
 		int result = -1;
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE emp SET sal = ?, comm = ? WHERE empno = ?");
-			Connection conn = DbConnection.connection();
+			
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, sal);
 			pstmt.setInt(2, comm);
@@ -25,12 +33,13 @@ public class EmpDao {
 		}
 		return result;
 	}
+	
 	public int 직원수정(int deptno, int empno) {
 		int result = -1;
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE emp SET deptno = ? WHERE empno = ?");
-			Connection conn = DbConnection.connection();
+			
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, deptno);
 			pstmt.setInt(2, empno);
@@ -47,7 +56,7 @@ public class EmpDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("DELETE FROM emp WHERE empno = ?");
-			Connection conn = DbConnection.connection();
+			
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, empno);
 
@@ -70,7 +79,7 @@ public class EmpDao {
 			sql.append("INSERT INTO emp ");
 			sql.append("VALUES(?,?,?,?,sysdate,?,?,?)"); //?는 1부터 시작함(DB는 1번지부터 시작함 , JAVA는 0번지)
 			//2) DB Session
-			Connection conn = DbConnection.connection();
+			
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			//3) 문장완성
 			pstmt.setInt(1, emp.getEmpno());
@@ -95,7 +104,7 @@ public class EmpDao {
 	public ArrayList<Emp> 직원목록보기() {
 		ArrayList<Emp> emps = new ArrayList<>();
 		try {
-			Connection conn = DbConnection.connection();
+			
 			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM emp");
 			ResultSet rs = pstmt.executeQuery(); //Read(select)할때만 executeQuery를 쓴다.(commit을 안한다.)
 		
@@ -121,7 +130,7 @@ public class EmpDao {
 		Emp emp = new Emp();
 	
 		try {
-			Connection conn = DbConnection.connection();
+			
 			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM emp WHERE empno="+index);
 			ResultSet rs = pstmt.executeQuery(); 
 		
