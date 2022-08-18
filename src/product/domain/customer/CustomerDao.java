@@ -1,0 +1,117 @@
+package product.domain.customer;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+
+public class CustomerDao {
+	private Connection conn;
+	public CustomerDao() {	}
+	public CustomerDao(Connection conn) {this.conn= conn;}
+	
+	public int insert(Customer customer) {
+		int result = -1;
+		
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("INSERT INTO customer ");
+			sql.append("VALUES(customer_seq.nextval,?,?,?)");
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			
+	
+			pstmt.setString(1, customer.getUsername());
+			pstmt.setString(2, customer.getPassword());
+			pstmt.setString(3, customer.getEmail());
+			
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Customer> findAll() {
+		ArrayList<Customer> customerList = new ArrayList<>();
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM customer ORDER BY id DESC");
+			ResultSet rs = pstmt.executeQuery(); //Read(select)할때만 executeQuery를 쓴다.(commit을 안한다.)
+		
+			while(rs.next()) {
+				Customer customer = new Customer();
+				customer.setId(rs.getInt("id"));
+				customer.setUsername(rs.getString("username"));
+				customer.setPassword(rs.getString("password"));
+				customer.setEmail(rs.getString("email"));
+				customerList.add(customer);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return customerList;
+	}
+	public Customer fintById(int id) {
+		Customer customer = new Customer();
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM customer WHERE id="+id);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				customer.setId(rs.getInt("id"));
+				customer.setUsername(rs.getString("username"));
+				customer.setPassword(rs.getString("password"));
+				customer.setEmail(rs.getString("email"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return customer;
+	}
+	public int updateByUsername(int id, Customer customer) {
+		int result = -1;
+		
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE customer SET username=?, password=?, email=? ");
+			sql.append("WHERE id = ?");
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1,customer.getUsername());
+			pstmt.setString(2,customer.getPassword());
+			pstmt.setString(3,customer.getEmail());
+			pstmt.setInt(4, id);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public int deleteById(int id) {
+		int result = -1;
+			
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("DELETE FROM customer WHERE id = ?");
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, id);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
+	
+}
