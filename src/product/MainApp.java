@@ -30,6 +30,8 @@ public class MainApp {
 		
 		for(int i=0;i<orderRespDtoList.size();i++) {
 			System.out.println(orderRespDtoList.get(i).getName());
+			System.out.println(orderRespDtoList.get(i).getPrice());
+			System.out.println(orderRespDtoList.get(i).getId());
 		}
 		
 

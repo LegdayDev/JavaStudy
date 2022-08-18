@@ -114,10 +114,10 @@ public class OrdersDao {
 		ArrayList<OrderRespDto> dtoList = new ArrayList<>();
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("select o.id, c.username, p.name, p.price"); //join을 하여 임의의 테이블이 생겼을 때 임의의 클래스를 만들어야 한다.(DTO : Data Transfer Object)통신전달오브젝트
+			sql.append("select o.id, c.username, p.name, p.price "); //join을 하여 임의의 테이블이 생겼을 때 임의의 클래스를 만들어야 한다.(DTO : Data Transfer Object)통신전달오브젝트
 			sql.append("from orders o ");
 			sql.append("INNER JOIN customer c ");
-			sql.append("OON o.customerId = c.id ");
+			sql.append("ON o.customerId = c.id ");
 			sql.append("INNER JOIN product p ");
 			sql.append("ON o.productId = p.id ");
 			sql.append("WHERE c.id = ?");
