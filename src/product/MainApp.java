@@ -14,7 +14,7 @@ import service.DbConnection;
 
 public class MainApp {
 	
-
+	
 	public static void main(String[] args) {
 		Connection conn = DbConnection.connection();
 		
