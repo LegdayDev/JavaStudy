@@ -4,8 +4,11 @@ public class HelloWorld {
 
 	public static void in(String[] args) {
 		// TODO Auto-generated method stub
-		int indxe =5;
-		System.out.println("hihi ${index}");
+		String str = "";
+		String str2 = null;
+		
+		if(str.equals(str2)) {System.out.println("같다");}
+		else {System.out.println("다르다");}
+		
 	}
-
 }

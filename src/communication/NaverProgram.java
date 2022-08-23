@@ -12,8 +12,8 @@ public class NaverProgram {
 	public static void main(String[] args) {
 		try {
 			URL url = new URL("https://www.naver.com");
-			URL url2 = new URL("https://weather.naver.com/");//패키지파일 경로는 .net으로 할것!
-			HttpsURLConnection conn = (HttpsURLConnection)url2.openConnection();
+
+			HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
 			
 			BufferedReader br = new BufferedReader(
 					new InputStreamReader(conn.getInputStream())
